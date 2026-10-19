@@ -52,6 +52,7 @@ This should give you an executable, mandelbrot, that you can now transfer to the
 
 (1) Assign qt6-amiga: to somewhere (ie. ram: or similar). This assign is for later use, but at present nothing is needed there.
 (2) Copy clib4.library to LIBS:
+(3) Make sure mesa.library is in LIBS: (OpenGL is rendered through it; ogles2.library is no longer used)
 
 Now you are ready to run the programs.
 

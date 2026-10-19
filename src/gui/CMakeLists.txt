@@ -327,7 +327,7 @@ qt_internal_extend_target(Gui CONDITION QT_FEATURE_standarditemmodel
 # On Windows with 'dynamic' OpenGL we must not link to opengl32.
 # DO NOT MOVE THIS TO THE BEGINNING OF THE FILE, the feature variables are not
 # available until the qt_internal_add_module call.
-if(QT_FEATURE_opengl AND NOT AMIGA) # On Amiga, we use our own library system.
+if(QT_FEATURE_opengl) # On Amiga, WrapOpenGL points at the Mesa libGL.a stub.
     if(QT_FEATURE_opengles2)
         find_package(GLESv2)
         target_link_libraries(Gui PUBLIC GLESv2::GLESv2)
