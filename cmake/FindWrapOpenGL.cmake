@@ -8,6 +8,20 @@ endif()
 set(WrapOpenGL_FOUND OFF)
 
 if(AMIGA)
+    # Desktop OpenGL on AmigaOS4 comes from the Mesa stub libGL.a in the SDK's common tree.
+    # Its gl* symbols forward to mesa.library through IMesa, which the plugin opens at runtime.
+    find_path(WrapOpenGL_AMIGA_INCLUDE_DIR NAMES GL/gl.h)
+    find_library(WrapOpenGL_AMIGA_LIBRARY NAMES GL)
+    if(WrapOpenGL_AMIGA_INCLUDE_DIR AND WrapOpenGL_AMIGA_LIBRARY)
+        set(WrapOpenGL_FOUND ON)
+        add_library(WrapOpenGL::WrapOpenGL INTERFACE IMPORTED)
+        target_include_directories(WrapOpenGL::WrapOpenGL
+                                   INTERFACE "${WrapOpenGL_AMIGA_INCLUDE_DIR}")
+        target_link_libraries(WrapOpenGL::WrapOpenGL INTERFACE "${WrapOpenGL_AMIGA_LIBRARY}")
+    endif()
+
+    include(FindPackageHandleStandardArgs)
+    find_package_handle_standard_args(WrapOpenGL DEFAULT_MSG WrapOpenGL_FOUND)
     return()
 endif()
 

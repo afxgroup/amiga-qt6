@@ -5,7 +5,7 @@ set(CMAKE_C_COMPILER   ppc-amigaos-gcc)
 set(CMAKE_CXX_COMPILER ppc-amigaos-g++)
 set(CMAKE_ASM_COMPILER ppc-amigaos-as)
 # set(CMAKE_MAKE_PROGRAM /usr/bin/ninja)
-set(CLIB4_SYSROOT "/opt/ppc-amigaos/ppc-amigaos/SDK")     # <— adjust
+set(CLIB4_SYSROOT "/usr/ppc-amigaos/SDK")     # SDK root of the cross toolchain
 
 # Only search the sysroot for headers/libs/packages
 set(CMAKE_FIND_ROOT_PATH "${CLIB4_SYSROOT}")
@@ -56,8 +56,13 @@ list(APPEND CMAKE_PREFIX_PATH
 list(APPEND CMAKE_LIBRARY_PATH
   "${CLIB4_SYSROOT}/clib4/lib"
   "${CLIB4_SYSROOT}/local/clib4/lib"
+  # Mesa GL stubs (libGL.a) live in the common tree, not in the clib4 one
+  "${CLIB4_SYSROOT}/local/common/lib"
 )
 list(APPEND CMAKE_INCLUDE_PATH
   "${CLIB4_SYSROOT}/clib4/include"
   "${CLIB4_SYSROOT}/local/clib4/include"
+  "${CLIB4_SYSROOT}/local/common/include"
+  # mesa.library interface headers (proto/mesa.h, inline4/mesa.h, mesa/mesa_defs.h)
+  "${CLIB4_SYSROOT}/include/include_h"
 )
